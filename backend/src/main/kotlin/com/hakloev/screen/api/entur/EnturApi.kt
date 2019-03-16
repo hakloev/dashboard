@@ -3,6 +3,8 @@ package com.hakloev.screen.api.entur
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.hakloev.screen.api.entur.model.response.StopPlaceResponse
 import com.hakloev.screen.graphql.GraphQLBuilder
+import com.hakloev.screen.model.entur.DeparturesResponse
+import com.hakloev.screen.model.entur.Platform
 import org.apache.http.HttpHeaders
 import org.apache.http.client.methods.HttpPost
 import org.apache.http.entity.ContentType
@@ -17,7 +19,7 @@ class EnturApi {
     private val objectMapper = jacksonObjectMapper()
     private val httpClient = HttpClientBuilder.create().build()
 
-    fun getStopPlaceWithEstimatedCalls(stopPlaceId: String): String? {
+    fun getDepartures(stopPlaceId: String, transportModes: List<String>): DeparturesResponse {
         val queryResource = File(javaClass.getResource("/graphql/journeyplanner/stopplace.graphql").file)
 
         val query = GraphQLBuilder
@@ -41,7 +43,13 @@ class EnturApi {
             objectMapper.readValue<StopPlaceResponse>(entity.content, StopPlaceResponse::class.java)
         }
 
-        return objectMapper.writeValueAsString(stopPlaceResponse)
+        // Force unwrap, due to always expecting a list of quays 🤫
+        val platforms = stopPlaceResponse.data.stopPlace.quays!!
+                .filter { transportModes.contains(it.stopPlace.transportMode) }
+                .map { Platform.fromQuay(it) }
+                .sortedWith(compareBy(Platform::transportMode, Platform::name))
+
+        return DeparturesResponse(platforms)
     }
 
     companion object {
