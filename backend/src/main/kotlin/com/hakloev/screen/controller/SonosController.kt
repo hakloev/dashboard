@@ -1,7 +1,7 @@
 package com.hakloev.screen.controller
 
-import com.hakloev.screen.api.SonosApi
-import com.hakloev.screen.model.SonosAuthorizationResponse
+import com.hakloev.screen.api.sonos.SonosApi
+import com.hakloev.screen.api.sonos.model.response.SonosAuthorizationResponse
 import com.hakloev.screen.properties.SonosProperties
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -53,4 +53,5 @@ class SonosController(private val api: SonosApi, private val properties: SonosPr
 
         return "test"
     }
+
 }

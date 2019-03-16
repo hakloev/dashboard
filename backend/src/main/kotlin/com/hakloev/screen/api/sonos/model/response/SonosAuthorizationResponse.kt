@@ -1,4 +1,4 @@
-package com.hakloev.screen.model
+package com.hakloev.screen.api.sonos.model.response
 
 import com.fasterxml.jackson.annotation.JsonProperty
 

@@ -1,9 +1,10 @@
-package com.hakloev.screen.api
+package com.hakloev.screen.api.sonos
 
 import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.hakloev.screen.model.SonosAuthorizationResponse
+import com.hakloev.screen.api.sonos.model.response.GroupsResponse
+import com.hakloev.screen.api.sonos.model.response.HouseholdResponse
+import com.hakloev.screen.api.sonos.model.response.SonosAuthorizationResponse
 import com.hakloev.screen.properties.SonosProperties
 import org.apache.http.client.methods.HttpGet
 import org.apache.http.client.methods.HttpPost
@@ -15,7 +16,6 @@ import java.util.*
 class SonosApi(private val properties: SonosProperties) {
 
     private val objectMapper = jacksonObjectMapper().apply {
-        registerModule(JavaTimeModule())
         disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
     }
 
@@ -67,27 +67,5 @@ class SonosApi(private val properties: SonosProperties) {
         }
     }
 
-    data class HouseholdResponse(val households: List<Household>)
-
-    data class Household(val id: String)
-
-    data class GroupsResponse(
-            val players: List<Player>,
-            val groups: List<Group>
-    )
-
-    data class Group(
-            val id: String,
-            val playerIds: List<String>,
-            val playbackState: String,
-            val coordinatorId: String,
-            val name: String
-    )
-
-    data class Player(
-            val id: String,
-            val name: String,
-            val restUrl: String,
-            val deviceIds: List<String>
-    )
 }
+
