@@ -1,0 +1,22 @@
+query ($id: String!, $filterByInUse: Boolean = false) {
+  stopPlace(id: $id) {
+    quays(filterByInUse: $filterByInUse) {
+      publicCode
+      description
+      stopPlace {
+        transportMode
+      }
+      estimatedCalls {
+        realtime
+        aimedArrivalTime
+        aimedDepartureTime
+        serviceJourney {
+          line {
+            name
+            publicCode
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+<html>
+<head>
+
+</head>
+<body>
+    <button onclick="location.href='https://api.sonos.com/login/v3/oauth?client_id={{clientId}}&response_type=code&state={{state}}&scope=playback-control-all&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fsonos-code-redirect'"
+            type="button">
+        Sign in with Sonos
+    </button>
+
+    {{#accessKey}}
+        <p>Authorized with Sonos</p>
+    {{/accessKey}}
+</body>
+</html>
