@@ -45,19 +45,44 @@ function Platform(props: { platform: Platform }) {
     </PlatformWrapper>   
   )
 }
+
+const FETCH_DEPARTURES_INTERVAL = 30_000
  
 class Departures extends React.PureComponent<DeparturesProps, DeparturesState> {
+
+  fetchDeparturesInterval?: number
 
   state: DeparturesState = {
     isLoading: true,
     platforms: [],
   }
 
+
   componentDidMount() {
+    document.addEventListener("visibilitychange", this.onFocus, false)
+
     this.getDepartures()
+
+    this.fetchDeparturesInterval = setInterval(this.getDepartures, FETCH_DEPARTURES_INTERVAL)
   }
 
-  async getDepartures() {
+  componentWillUnmount() {
+    window.removeEventListener("visibilitychange", this.onFocus)
+
+    clearInterval(this.fetchDeparturesInterval)
+  }
+
+  onFocus = () => {
+    if (document.visibilityState === "hidden") {
+      console.log('hidden')
+    } else if (document.visibilityState === "visible") {
+      console.log('visible')
+    }
+  }
+
+  getDepartures = async () => {
+    console.log('fetch departures')
+
     const response = await fetchDepartures('NSR:StopPlace:58195')
     
     this.setState({ 
