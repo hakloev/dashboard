@@ -1,11 +1,15 @@
 import * as React from 'react'
-import { Component } from 'react'
-import { render } from 'react-dom'
+import ReactDOM from 'react-dom'
 
-class App extends Component {
-  render() {
-    return (<h1>Hello World!</h1>)
-  }
+import Departures from './Departures'
+
+function App() {
+  return (
+    <Departures />
+  )
 }
 
-render(<App />, document.getElementById('root'))
+ReactDOM.render(
+  <App />, 
+  document.getElementById('root')
+)
