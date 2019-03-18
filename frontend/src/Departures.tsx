@@ -1,4 +1,5 @@
 import React from "React";
+import styled from "styled-components";
 import { fetchDepartures } from "./api/departures";
 import { Platform, Departure } from "./api/departures/types";
 
@@ -11,29 +12,37 @@ type DeparturesState = {
   platforms: Platform[]
 }
 
+const DepartureHeader = styled.p`
+  color: white;
+`
+
 function Departure(props: { departure: Departure }) {
   const { departure } = props
 
   return (
     <div>
-      <h1>{ departure.lineNumber + ' ' + departure.line }</h1>
-      <h2>{ departure.plannedDeparture }</h2>
+      <DepartureHeader>{ departure.lineNumber + ' ' + departure.line }</DepartureHeader>
+      <p>{ departure.plannedDeparture }</p>
     </div>   
   )
 }
+
+const PlatformWrapper = styled.div`
+  background-color: #808D92;
+`
 
 
 function Platform(props: { platform: Platform }) {
   const { platform } = props
 
   return (
-    <div>
+    <PlatformWrapper>
       <h1>{ platform.name + ' ' + platform.transportMode }</h1>
       {
         platform.departures
           .map(departure => <Departure key={ departure.plannedArrival } departure={ departure } />)
       }
-    </div>   
+    </PlatformWrapper>   
   )
 }
  
