@@ -16,7 +16,7 @@ function Departure(props: { departure: Departure }) {
 
   return (
     <div>
-      <h1>{ departure.line }</h1>
+      <h1>{ departure.lineNumber + ' ' + departure.line }</h1>
       <h2>{ departure.plannedDeparture }</h2>
     </div>   
   )
