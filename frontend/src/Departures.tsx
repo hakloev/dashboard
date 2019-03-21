@@ -1,5 +1,7 @@
 import React from "React";
 import styled from "styled-components";
+import moment from "moment";
+
 import { fetchDepartures } from "./api/departures";
 import { Platform, Departure } from "./api/departures/types";
 
@@ -22,7 +24,7 @@ function Departure(props: { departure: Departure }) {
   return (
     <div>
       <DepartureHeader>{ departure.lineNumber + ' ' + departure.line }</DepartureHeader>
-      <p>{ departure.plannedDeparture }</p>
+      <p>{ moment(departure.plannedDeparture).format("HH:mm") }</p>
     </div>   
   )
 }
