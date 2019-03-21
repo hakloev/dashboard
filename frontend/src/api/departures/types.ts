@@ -5,7 +5,7 @@ export interface IDeparturesResponse {
 export interface IPlatform {
     name: string;
     description: string;
-    transportMode: 'bus' | 'tram';
+    transportMode: "bus" | "tram";
     departures: IDeparture[];
 }
 

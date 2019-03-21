@@ -1,6 +1,6 @@
-import { IDeparturesResponse } from './types';
+import { IDeparturesResponse } from "./types";
 
-const baseURL = 'http://localhost:8080/api/entur';
+const baseURL = "http://localhost:8080/api/entur";
 
 export async function fetchDepartures(stopPlace: string): Promise<IDeparturesResponse> {
     try {

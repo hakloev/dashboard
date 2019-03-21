@@ -1,9 +1,9 @@
-import moment from 'moment';
-import React from 'react';
-import styled from 'styled-components';
+import moment from "moment";
+import React from "react";
+import styled from "styled-components";
 
-import { fetchDepartures } from './api/departures';
-import { IDeparture, IPlatform } from './api/departures/types';
+import { fetchDepartures } from "./api/departures";
+import { IDeparture, IPlatform } from "./api/departures/types";
 
 interface IDeparturesState {
     isLoading: boolean;
@@ -19,8 +19,8 @@ function Departure(props: { departure: IDeparture }) {
 
     return (
         <div>
-            <DepartureHeader>{departure.lineNumber + ' ' + departure.line}</DepartureHeader>
-            <p>{moment(departure.plannedDeparture).format('HH:mm')}</p>
+            <DepartureHeader>{departure.lineNumber + " " + departure.line}</DepartureHeader>
+            <p>{moment(departure.plannedDeparture).format("HH:mm")}</p>
         </div>
     );
 }
@@ -34,7 +34,7 @@ function Platform(props: { platform: IPlatform }) {
 
     return (
         <PlatformWrapper>
-            <h1>{platform.name + ' ' + platform.transportMode}</h1>
+            <h1>{platform.name + " " + platform.transportMode}</h1>
             {platform.departures.map(departure => (
                 <Departure key={departure.plannedArrival} departure={departure} />
             ))}
@@ -53,7 +53,7 @@ class Departures extends React.PureComponent<{}, IDeparturesState> {
     };
 
     public componentDidMount() {
-        document.addEventListener('visibilitychange', this.onFocus, false);
+        document.addEventListener("visibilitychange", this.onFocus, false);
 
         this.getDepartures();
 
@@ -61,23 +61,23 @@ class Departures extends React.PureComponent<{}, IDeparturesState> {
     }
 
     public componentWillUnmount() {
-        window.removeEventListener('visibilitychange', this.onFocus);
+        window.removeEventListener("visibilitychange", this.onFocus);
 
         clearInterval(this.fetchDeparturesInterval);
     }
 
     public onFocus = () => {
-        if (document.visibilityState === 'hidden') {
-            console.log('hidden');
-        } else if (document.visibilityState === 'visible') {
-            console.log('visible');
+        if (document.visibilityState === "hidden") {
+            console.log("hidden");
+        } else if (document.visibilityState === "visible") {
+            console.log("visible");
         }
     };
 
     public getDepartures = async () => {
-        console.log('fetch departures');
+        console.log("fetch departures");
 
-        const response = await fetchDepartures('NSR:StopPlace:58195');
+        const response = await fetchDepartures("NSR:StopPlace:58195");
 
         this.setState({
             isLoading: false,
