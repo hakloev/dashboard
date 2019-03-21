@@ -1,18 +1,18 @@
-export type DeparturesResponse = {
-  platforms: Platform[],
+export interface IDeparturesResponse {
+    platforms: IPlatform[];
 }
 
-export type Platform = {
-  name: string,
-  description: string,
-  transportMode: 'bus' | 'tram',
-  departures: Departure[],
+export interface IPlatform {
+    name: string;
+    description: string;
+    transportMode: 'bus' | 'tram';
+    departures: IDeparture[];
 }
 
-export type Departure = {
-  line: string,
-  lineNumber: string,
-  plannedArrival: string,
-  plannedDeparture: string,
-  realtime: boolean
+export interface IDeparture {
+    line: string;
+    lineNumber: string;
+    plannedArrival: string;
+    plannedDeparture: string;
+    realtime: boolean;
 }

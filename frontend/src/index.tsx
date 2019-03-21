@@ -1,18 +1,13 @@
-import * as React from 'react'
-import ReactDOM from 'react-dom'
-import moment from "moment";
+import moment from 'moment';
+import * as React from 'react';
+import ReactDOM from 'react-dom';
 
-import Departures from './Departures'
+import Departures from './Departures';
 
-moment.locale('nb')
+moment.locale('nb');
 
 function App() {
-  return (
-    <Departures />
-  )
+    return <Departures />;
 }
 
-ReactDOM.render(
-  <App />, 
-  document.getElementById('root')
-)
+ReactDOM.render(<App />, document.getElementById('root'));
