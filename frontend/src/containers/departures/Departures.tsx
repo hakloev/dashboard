@@ -2,8 +2,8 @@ import moment from "moment";
 import React from "react";
 import styled from "styled-components";
 
-import { fetchDepartures } from "./api/departures";
-import { IDeparture, IPlatform } from "./api/departures/types";
+import { fetchDepartures } from "../../api/departures";
+import { IDeparture, IPlatform } from "../../api/departures/types";
 
 interface IDeparturesState {
     isLoading: boolean;
@@ -45,14 +45,14 @@ function Platform(props: { platform: IPlatform }) {
 const FETCH_DEPARTURES_INTERVAL = 30_000;
 
 class Departures extends React.PureComponent<{}, IDeparturesState> {
-    public fetchDeparturesInterval?: number;
+    fetchDeparturesInterval?: number;
 
-    public state: IDeparturesState = {
+    state: IDeparturesState = {
         isLoading: true,
         platforms: [],
     };
 
-    public componentDidMount() {
+    componentDidMount() {
         document.addEventListener("visibilitychange", this.onFocus, false);
 
         this.getDepartures();
@@ -60,13 +60,13 @@ class Departures extends React.PureComponent<{}, IDeparturesState> {
         this.fetchDeparturesInterval = setInterval(this.getDepartures, FETCH_DEPARTURES_INTERVAL);
     }
 
-    public componentWillUnmount() {
+    componentWillUnmount() {
         window.removeEventListener("visibilitychange", this.onFocus);
 
         clearInterval(this.fetchDeparturesInterval);
     }
 
-    public onFocus = () => {
+    onFocus = () => {
         if (document.visibilityState === "hidden") {
             console.log("hidden");
         } else if (document.visibilityState === "visible") {
@@ -74,7 +74,7 @@ class Departures extends React.PureComponent<{}, IDeparturesState> {
         }
     };
 
-    public getDepartures = async () => {
+    getDepartures = async () => {
         console.log("fetch departures");
 
         const response = await fetchDepartures("NSR:StopPlace:58195");
@@ -85,7 +85,7 @@ class Departures extends React.PureComponent<{}, IDeparturesState> {
         });
     };
 
-    public render() {
+    render() {
         if (this.state.isLoading) {
             return <h1>laster...</h1>;
         }
