@@ -6,6 +6,7 @@ import { IDeparture } from "../../../api/departures/types";
 
 const DepartureWrapper = styled.div`
     display: flex;
+    justify-content: flex-left;
     align-items: center;
     margin-left: 1.75em;
     padding: 0.5em 0;
@@ -21,6 +22,7 @@ const DepartureLineNumber = styled.p<{ backgroundColor: string }>`
 `;
 
 const DepartureDestination = styled.p`
+    flex: 1;
     color: white;
     margin: 0;
     margin-right: 0.4em;
