@@ -1,4 +1,6 @@
+import moment = require("moment");
 import React from "react";
+import styled from "styled-components";
 
 import { fetchDepartures } from "../../api/departures";
 import { IPlatform } from "../../api/departures/types";
@@ -7,16 +9,27 @@ import Platform from "./components/Platform";
 interface IDeparturesState {
     isLoading: boolean;
     platforms: IPlatform[];
+    lastUpdated?: Date;
+    time: Date;
 }
 
 const FETCH_DEPARTURES_INTERVAL = 30_000;
+const UPDATE_UI_INTERVAL = 5_000;
+
+const DeparturesContainer = styled.section`
+    display: flex;
+    flex-direction: column;
+`;
 
 class Departures extends React.PureComponent<{}, IDeparturesState> {
     fetchDeparturesInterval?: number;
+    updateDeparturesInterval?: number;
 
     state: IDeparturesState = {
         isLoading: true,
+        lastUpdated: undefined,
         platforms: [],
+        time: new Date(),
     };
 
     componentDidMount() {
@@ -25,12 +38,14 @@ class Departures extends React.PureComponent<{}, IDeparturesState> {
         this.getDepartures();
 
         this.fetchDeparturesInterval = setInterval(this.getDepartures, FETCH_DEPARTURES_INTERVAL);
+        this.updateDeparturesInterval = setInterval(() => this.setState({ time: new Date() }), UPDATE_UI_INTERVAL);
     }
 
     componentWillUnmount() {
         window.removeEventListener("visibilitychange", this.onFocus);
 
         clearInterval(this.fetchDeparturesInterval);
+        clearInterval(this.updateDeparturesInterval);
     }
 
     onFocus = () => {
@@ -48,6 +63,7 @@ class Departures extends React.PureComponent<{}, IDeparturesState> {
 
         this.setState({
             isLoading: false,
+            lastUpdated: new Date(),
             platforms: response.platforms,
         });
     };
@@ -57,12 +73,16 @@ class Departures extends React.PureComponent<{}, IDeparturesState> {
             return <h1>laster...</h1>;
         }
 
+        const platforms = this.state.platforms.map(platform => <Platform key={platform.name} platform={platform} />);
+
         return (
-            <React.Fragment>
-                {this.state.platforms.map(platform => (
-                    <Platform key={platform.name} platform={platform} />
-                ))}
-            </React.Fragment>
+            <DeparturesContainer>
+                {platforms}
+                <p>
+                    Sist oppdatert klokken:{" "}
+                    {this.state.lastUpdated ? moment(this.state.lastUpdated).format("HH:mm:ss") : "aldri"}
+                </p>
+            </DeparturesContainer>
         );
     }
 }

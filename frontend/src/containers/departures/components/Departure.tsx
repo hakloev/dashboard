@@ -25,7 +25,7 @@ const DepartureDestination = styled.p`
     flex: 1;
     color: white;
     margin: 0;
-    margin-right: 0.4em;
+    margin-right: 2em;
 `;
 
 const DepartureTime = styled.p`
@@ -35,8 +35,21 @@ const DepartureTime = styled.p`
     font-size: 1.3em;
 `;
 
+const TIME_TO_STOP_IN_SECONDS = 60 * 4;
+const LIMIT_OF_NOW_IN_SECONDS = 30;
+
 function Departure(props: { departure: IDeparture }) {
     const { departure } = props;
+
+    const departureTime = moment(departure.plannedDeparture);
+    const diffFromNow = moment.duration(departureTime.diff(moment())).asSeconds();
+
+    const departureTimeString =
+        diffFromNow > TIME_TO_STOP_IN_SECONDS
+            ? departureTime.format("HH:mm")
+            : diffFromNow < LIMIT_OF_NOW_IN_SECONDS
+            ? "nå"
+            : diffFromNow + " min";
 
     return (
         <DepartureWrapper>
@@ -44,7 +57,10 @@ function Departure(props: { departure: IDeparture }) {
                 {departure.line.number}
             </DepartureLineNumber>
             <DepartureDestination>{departure.line.name}</DepartureDestination>
-            <DepartureTime>{moment(departure.plannedDeparture).format("HH:mm")}</DepartureTime>
+            <DepartureTime>
+                {diffFromNow < TIME_TO_STOP_IN_SECONDS && "(" + departureTime.format("HH:mm") + ")"}
+                {departureTimeString}
+            </DepartureTime>
         </DepartureWrapper>
     );
 }
