@@ -16,6 +16,7 @@
     "@babel/plugin-transform-runtime": "^7.3.4",
     "parcel-bundler": "^1.12.2",
     "prettier": "^1.16.4",
+    "sass": "^1.17.3",
     "tslint": "^5.14.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-react": "^3.6.0",

@@ -10,9 +10,15 @@ export interface IPlatform {
 }
 
 export interface IDeparture {
-    line: string;
-    lineNumber: string;
+    realtime: boolean;
+    cancelled: boolean;
     plannedArrival: string;
     plannedDeparture: string;
-    realtime: boolean;
+    line: ILine;
+}
+
+export interface ILine {
+    name: string;
+    number: string;
+    lineColor: string;
 }
