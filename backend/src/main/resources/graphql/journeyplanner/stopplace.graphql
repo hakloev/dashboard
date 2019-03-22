@@ -1,6 +1,6 @@
 query ($id: String!, $filterByInUse: Boolean = false) {
   stopPlace(id: $id) {
-    quays(filterByInUse: $filterByInUse) {
+     quays(filterByInUse: $filterByInUse) {
       publicCode
       description
       stopPlace {
@@ -10,10 +10,17 @@ query ($id: String!, $filterByInUse: Boolean = false) {
         realtime
         aimedArrivalTime
         aimedDepartureTime
+        cancellation
+        destinationDisplay {
+          frontText
+        }
         serviceJourney {
           line {
-            name
             publicCode
+            presentation {
+              colour
+              textColour
+            }
           }
         }
       }
