@@ -17,8 +17,8 @@ const FETCH_DEPARTURES_INTERVAL = 30_000;
 const UPDATE_UI_INTERVAL = 5_000;
 
 const DeparturesContainer = styled.section`
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 `;
 
 class Departures extends React.PureComponent<{}, IDeparturesState> {
@@ -29,7 +29,7 @@ class Departures extends React.PureComponent<{}, IDeparturesState> {
         isLoading: true,
         lastUpdated: undefined,
         platforms: [],
-        time: new Date(),
+        time: new Date()
     };
 
     componentDidMount() {
@@ -37,8 +37,14 @@ class Departures extends React.PureComponent<{}, IDeparturesState> {
 
         this.getDepartures();
 
-        this.fetchDeparturesInterval = setInterval(this.getDepartures, FETCH_DEPARTURES_INTERVAL);
-        this.updateDeparturesInterval = setInterval(() => this.setState({ time: new Date() }), UPDATE_UI_INTERVAL);
+        this.fetchDeparturesInterval = setInterval(
+            this.getDepartures,
+            FETCH_DEPARTURES_INTERVAL
+        );
+        this.updateDeparturesInterval = setInterval(
+            () => this.setState({ time: new Date() }),
+            UPDATE_UI_INTERVAL
+        );
     }
 
     componentWillUnmount() {
@@ -64,7 +70,7 @@ class Departures extends React.PureComponent<{}, IDeparturesState> {
         this.setState({
             isLoading: false,
             lastUpdated: new Date(),
-            platforms: response.platforms,
+            platforms: response.platforms
         });
     };
 
@@ -73,14 +79,20 @@ class Departures extends React.PureComponent<{}, IDeparturesState> {
             return <h1>laster...</h1>;
         }
 
-        const platforms = this.state.platforms.map(platform => <Platform key={platform.name} platform={platform} />);
+        const platforms = this.state.platforms.map(platform => (
+            <Platform key={platform.name} platform={platform} />
+        ));
 
         return (
             <DeparturesContainer>
                 {platforms}
                 <p>
                     Sist oppdatert klokken:{" "}
-                    {this.state.lastUpdated ? moment(this.state.lastUpdated).format("HH:mm:ss") : "aldri"}
+                    {
+                        this.state.lastUpdated
+                            ? moment(this.state.lastUpdated).format("HH:mm:ss")
+                            : "aldri"
+                    }
                 </p>
             </DeparturesContainer>
         );

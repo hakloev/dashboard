@@ -1,6 +1,12 @@
 {
-    "extends": ["tslint:latest", "tslint-react", "tslint-config-prettier"],
+    "extends": [
+        "tslint:latest",
+        "tslint-react"
+    ],
     "rules": {
-        "member-access": false
+        "member-access": false,
+        "trailing-comma": true,
+        "arrow-parens": false,
+        "jsx-no-multiline-js": false
     }
 }

@@ -19,7 +19,11 @@ function Clock({ className }: { className?: string }) {
         setDate(new Date());
     }
 
-    return <ClockText>{moment(date).format("HH:mm")}</ClockText>;
+    return (
+        <ClockText>
+            {moment(date).format("HH:mm")}
+        </ClockText>
+    );
 }
 
 export default Clock;

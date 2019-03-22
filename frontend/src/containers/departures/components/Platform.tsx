@@ -19,7 +19,10 @@ function Platform(props: { platform: IPlatform }) {
     const { platform } = props;
 
     const departures = platform.departures.map(departure => (
-        <Departure key={departure.line.name + departure.plannedArrival} departure={departure} />
+        <Departure
+            key={departure.line.name + departure.plannedArrival}
+            departure={departure}
+        />
     ));
 
     return (
