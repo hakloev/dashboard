@@ -7,6 +7,7 @@ import Header from "./containers/header/Header";
 import "./styles.scss";
 
 const Body = styled.div`
+    flex-direction: column;
     padding: 1em 2em;
 `;
 
@@ -24,12 +25,18 @@ export default function App() {
     return (
         <Body>
             <Header />
+
             <Row>
                 <Departures />
-                <Column>
-                    <h1>te</h1>
-                    <h1>t</h1>
-                </Column>
+                <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+                    <div style={{ flex: 1 }}>
+                        <span>here be weather</span>
+                    </div>
+                    <div style={{ flex: 1 }}>
+                        <span>here be tweet</span>
+                    </div>
+                </div>
+
             </Row>
         </Body>
     );

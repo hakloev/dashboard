@@ -17,12 +17,14 @@ const FETCH_DEPARTURES_INTERVAL = 30_000;
 const UPDATE_UI_INTERVAL = 5_000;
 
 const Container = styled.section`
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding-right: 2em;
 `;
 
 const LastUpdated = styled.p`
-  margin: 0;
+    margin: 0;
 `;
 
 class Departures extends React.PureComponent<{}, IDeparturesState> {
@@ -33,7 +35,7 @@ class Departures extends React.PureComponent<{}, IDeparturesState> {
         isLoading: true,
         lastUpdated: undefined,
         platforms: [],
-        time: new Date()
+        time: new Date(),
     };
 
     componentDidMount() {
@@ -43,11 +45,11 @@ class Departures extends React.PureComponent<{}, IDeparturesState> {
 
         this.fetchDeparturesInterval = setInterval(
             this.getDepartures,
-            FETCH_DEPARTURES_INTERVAL
+            FETCH_DEPARTURES_INTERVAL,
         );
         this.updateDeparturesInterval = setInterval(
             () => this.setState({ time: new Date() }),
-            UPDATE_UI_INTERVAL
+            UPDATE_UI_INTERVAL,
         );
     }
 
@@ -72,7 +74,7 @@ class Departures extends React.PureComponent<{}, IDeparturesState> {
         this.setState({
             isLoading: false,
             lastUpdated: new Date(),
-            platforms: response.platforms
+            platforms: response.platforms,
         });
     }
 
@@ -87,7 +89,7 @@ class Departures extends React.PureComponent<{}, IDeparturesState> {
 
         const lastUpdated = this.state.lastUpdated
             ? moment(this.state.lastUpdated).format("HH:mm:ss")
-            : "aldri"
+            : "aldri";
 
         return (
             <Container>

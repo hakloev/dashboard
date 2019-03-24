@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { IPlatform } from "../../../api/departures/types";
 import Departure from "./Departure";
 
-const Wrapper = styled.section`
+const Wrapper = styled.div`
     background-color: #808d92;
     padding: 1em;
     margin-bottom: 1em;
