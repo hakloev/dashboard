@@ -4,6 +4,7 @@ import styled from "styled-components";
 import "./styles.scss";
 
 import Clock from "./components/Clock";
+import Date from "./components/Date";
 import Departures from "./containers/departures/Departures";
 
 const Row = styled.div`
@@ -16,6 +17,7 @@ export default function App() {
         <React.Fragment>
             <Row>
                 <Clock />
+                <Date />
             </Row>
             <Row>
                 <Departures />
