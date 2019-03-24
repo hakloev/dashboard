@@ -22,6 +22,10 @@
                 "singleline": "never"
             }
         ],
+        "no-submodule-imports": [
+            true,
+            "moment/locale/nb"
+        ],
         "arrow-parens": false,
         "jsx-no-multiline-js": false
     },
