@@ -6,14 +6,13 @@ import Departure from "./Departure";
 
 const Wrapper = styled.div`
     background-color: #808d92;
-    padding: 1em;
-    margin-bottom: 1em;
+    padding: 0.5em 1em;
+    margin-bottom: 0.5em;
 `;
 
 const Description = styled.h1`
     color: white;
     margin: 0;
-    margin-bottom: 0.2em;
 `;
 
 function Platform(props: { platform: IPlatform }) {

@@ -21,8 +21,11 @@ const LineNumber = styled.p<{ backgroundColor: string }>`
     font-weight: bold;
 `;
 
-const Destination = styled.p`
+const DestinationWrapper = styled.div`
     flex: 1;
+`;
+
+const Destination = styled.p`
     margin: 0;
     margin-right: 2em;
     color: white;
@@ -31,41 +34,56 @@ const Destination = styled.p`
 const Time = styled.p`
     color: white;
     margin: 0;
+`;
+
+const PlannedDeparture = styled(Time)`
+    font-size: 0.8em;
+    margin-right: 1em;
+`;
+
+const ActualDeparture = styled(Time)`
     font-size: 1.2em;
 `;
 
-const TIME_TO_STOP_IN_SECONDS = 60 * 4;
-const LIMIT_OF_NOW_IN_SECONDS = 60;
+const HUMAN_TIME_THRESHOLD_IN_SECONDS = 60 * 4;
+const NOW_THRESHOLD_IN_SECONDS = 60;
+
+function getFormattedDepartureTime(time: string, realtime: boolean = false): string {
+    const date = moment(time);
+    const diff = moment.duration(date.diff(moment.now()));
+
+    const diffInSeconds = diff.asSeconds();
+
+    if (diffInSeconds < NOW_THRESHOLD_IN_SECONDS) {
+        return "nå";
+    } else if (diffInSeconds < HUMAN_TIME_THRESHOLD_IN_SECONDS) {
+        const minutes = diff.minutes();
+        return realtime ? `ca ${minutes} min` : `${minutes} min`;
+    } else {
+        return date.format("HH:mm");
+    }
+}
+
+function getPlannedDepartureTime(time: string): string {
+    return `Rutetid: ${moment(time).format("HH:mm")}`;
+}
 
 function Departure(props: { departure: IDeparture }) {
     const { departure } = props;
 
-    const departureTime = moment(departure.plannedDeparture);
-    const diffFromNow = moment.duration(departureTime.diff(moment()));
-
-    const departureTimeString =
-        diffFromNow.asSeconds() < TIME_TO_STOP_IN_SECONDS
-            ? diffFromNow.asSeconds() < LIMIT_OF_NOW_IN_SECONDS
-                ? "nå"
-                : diffFromNow.minutes() + " min"
-            : departureTime.format("HH:mm");
-
-    let originalDepartureTime;
-
-    if (diffFromNow.asSeconds() < TIME_TO_STOP_IN_SECONDS) {
-        originalDepartureTime = `(${departureTime.format("HH:mm")}) `;
-    }
+    const departureTime = getFormattedDepartureTime(departure.plannedDeparture, departure.realtime);
+    const plannedDepartureTime = getPlannedDepartureTime(departure.plannedDeparture);
 
     return (
         <Wrapper>
             <LineNumber backgroundColor={departure.line.lineColor}>
                 {departure.line.number}
             </LineNumber>
-            <Destination>{departure.line.name}</Destination>
-            <Time>
-                {originalDepartureTime}
-                {departureTimeString}
-            </Time>
+            <DestinationWrapper>
+                <Destination>{departure.line.name}</Destination>
+                <PlannedDeparture>{plannedDepartureTime}</PlannedDeparture>
+            </DestinationWrapper>
+            <ActualDeparture>{departureTime}</ActualDeparture>
         </Wrapper>
     );
 }
