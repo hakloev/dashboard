@@ -4,15 +4,16 @@ import styled from "styled-components";
 import { IPlatform } from "../../../api/departures/types";
 import Departure from "./Departure";
 
-const PlatformWrapper = styled.section`
+const Wrapper = styled.section`
     background-color: #808d92;
     padding: 1em;
-    margin: 1em;
+    margin-bottom: 1em;
 `;
 
-const PlatformHeader = styled.h1`
+const Description = styled.h1`
     color: white;
-    margin-top: 0;
+    margin: 0;
+    margin-bottom: 0.2em;
 `;
 
 function Platform(props: { platform: IPlatform }) {
@@ -26,10 +27,10 @@ function Platform(props: { platform: IPlatform }) {
     ));
 
     return (
-        <PlatformWrapper>
-            <PlatformHeader>{platform.description}</PlatformHeader>
+        <Wrapper>
+            <Description>{platform.description}</Description>
             {departures}
-        </PlatformWrapper>
+        </Wrapper>
     );
 }
 

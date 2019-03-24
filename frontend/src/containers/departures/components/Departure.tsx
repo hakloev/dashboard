@@ -4,35 +4,34 @@ import styled from "styled-components";
 
 import { IDeparture } from "../../../api/departures/types";
 
-const DepartureWrapper = styled.div`
+const Wrapper = styled.div`
     display: flex;
     justify-content: flex-left;
     align-items: center;
-    margin-left: 1.75em;
-    padding: 0.5em 0;
+    margin-left: 1em;
+    padding: 0.2em 0;
 `;
 
-const DepartureLineNumber = styled.p<{ backgroundColor: string }>`
-    padding: 0.2em 1em;
+const LineNumber = styled.p<{ backgroundColor: string }>`
+    background-color: ${props => `#${props.backgroundColor}`};
+    padding: 0.1em 0.8em;
     margin: 0;
     margin-right: 1em;
-    background-color: ${props => `#${props.backgroundColor}`};
-    font-weight: bold;
     color: white;
+    font-weight: bold;
 `;
 
-const DepartureDestination = styled.p`
+const Destination = styled.p`
     flex: 1;
-    color: white;
     margin: 0;
     margin-right: 2em;
+    color: white;
 `;
 
-const DepartureTime = styled.p`
+const Time = styled.p`
     color: white;
     margin: 0;
-    margin-right: 0.4em;
-    font-size: 1.3em;
+    font-size: 1.2em;
 `;
 
 const TIME_TO_STOP_IN_SECONDS = 60 * 4;
@@ -43,7 +42,6 @@ function Departure(props: { departure: IDeparture }) {
 
     const departureTime = moment(departure.plannedDeparture);
     const diffFromNow = moment.duration(departureTime.diff(moment()));
-    console.log(diffFromNow.asSeconds())
 
     const departureTimeString =
         diffFromNow.asSeconds() < TIME_TO_STOP_IN_SECONDS
@@ -52,17 +50,23 @@ function Departure(props: { departure: IDeparture }) {
                 : diffFromNow.minutes() + " min"
             : departureTime.format("HH:mm");
 
+    let originalDepartureTime;
+
+    if (diffFromNow.asSeconds() < TIME_TO_STOP_IN_SECONDS) {
+        originalDepartureTime = `(${departureTime.format("HH:mm")}) `;
+    }
+
     return (
-        <DepartureWrapper>
-            <DepartureLineNumber backgroundColor={departure.line.lineColor}>
+        <Wrapper>
+            <LineNumber backgroundColor={departure.line.lineColor}>
                 {departure.line.number}
-            </DepartureLineNumber>
-            <DepartureDestination>{departure.line.name}</DepartureDestination>
-            <DepartureTime>
-                {diffFromNow.asSeconds() < TIME_TO_STOP_IN_SECONDS && "(" + departureTime.format("HH:mm") + ")"}
+            </LineNumber>
+            <Destination>{departure.line.name}</Destination>
+            <Time>
+                {originalDepartureTime}
                 {departureTimeString}
-            </DepartureTime>
-        </DepartureWrapper>
+            </Time>
+        </Wrapper>
     );
 }
 

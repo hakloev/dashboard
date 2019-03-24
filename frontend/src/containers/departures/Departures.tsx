@@ -16,9 +16,13 @@ interface IDeparturesState {
 const FETCH_DEPARTURES_INTERVAL = 30_000;
 const UPDATE_UI_INTERVAL = 5_000;
 
-const DeparturesContainer = styled.section`
+const Container = styled.section`
   display: flex;
   flex-direction: column;
+`;
+
+const LastUpdated = styled.p`
+  margin: 0;
 `;
 
 class Departures extends React.PureComponent<{}, IDeparturesState> {
@@ -60,11 +64,9 @@ class Departures extends React.PureComponent<{}, IDeparturesState> {
         } else if (document.visibilityState === "visible") {
             console.log("visible");
         }
-    };
+    }
 
     getDepartures = async () => {
-        console.log("fetch departures");
-
         const response = await fetchDepartures("NSR:StopPlace:58195");
 
         this.setState({
@@ -72,7 +74,7 @@ class Departures extends React.PureComponent<{}, IDeparturesState> {
             lastUpdated: new Date(),
             platforms: response.platforms
         });
-    };
+    }
 
     render() {
         if (this.state.isLoading) {
@@ -83,18 +85,15 @@ class Departures extends React.PureComponent<{}, IDeparturesState> {
             <Platform key={platform.name} platform={platform} />
         ));
 
+        const lastUpdated = this.state.lastUpdated
+            ? moment(this.state.lastUpdated).format("HH:mm:ss")
+            : "aldri"
+
         return (
-            <DeparturesContainer>
+            <Container>
                 {platforms}
-                <p>
-                    Sist oppdatert klokken:{" "}
-                    {
-                        this.state.lastUpdated
-                            ? moment(this.state.lastUpdated).format("HH:mm:ss")
-                            : "aldri"
-                    }
-                </p>
-            </DeparturesContainer>
+                <LastUpdated>{`Sist oppdatert: ${lastUpdated}`}</LastUpdated>
+            </Container>
         );
     }
 }

@@ -2,12 +2,13 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
-const ClockText = styled.p`
+const Text = styled.p`
+    margin: 0;
     font-weight: 100;
     font-size: 2.5em;
 `;
 
-function Clock({ className }: { className?: string }) {
+function Clock() {
     const [date, setDate] = useState(new Date());
 
     useEffect(() => {
@@ -20,9 +21,7 @@ function Clock({ className }: { className?: string }) {
     }
 
     return (
-        <ClockText>
-            {moment(date).format("HH:mm")}
-        </ClockText>
+        <Text>{moment(date).format("HH:mm")}</Text>
     );
 }
 

@@ -14,7 +14,9 @@ const Row = styled.div`
 export default function App() {
     return (
         <React.Fragment>
-            <Clock />
+            <Row>
+                <Clock />
+            </Row>
             <Row>
                 <Departures />
             </Row>
