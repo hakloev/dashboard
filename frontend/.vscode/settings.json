@@ -1,4 +1,8 @@
 {
   "editor.formatOnSave": true,
-  "javascript.format.enable": false
+  "editor.codeActionsOnSave": {
+    "source.fixAll.tslint": true
+  },
+  "javascript.format.enable": false,
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

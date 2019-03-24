@@ -4,9 +4,32 @@
         "tslint-react"
     ],
     "rules": {
+        "max-line-length": {
+            "options": [
+                120
+            ]
+        },
+        "indent": [
+            true,
+            "spaces",
+            4
+        ],
         "member-access": false,
-        "trailing-comma": true,
+        "trailing-comma": [
+            true,
+            {
+                "multiline": "always",
+                "singleline": "never"
+            }
+        ],
         "arrow-parens": false,
         "jsx-no-multiline-js": false
+    },
+    "jsRules": {
+        "max-line-length": {
+            "options": [
+                120
+            ]
+        }
     }
 }
