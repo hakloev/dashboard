@@ -24,7 +24,7 @@ function Clock() {
     }
 
     return (
-        <Text>{moment(date).format("dddd, DD MMMM")}</Text>
+        <Text>{moment(date).format("dddd, DD. MMMM")}</Text>
     );
 }
 
