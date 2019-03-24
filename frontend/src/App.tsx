@@ -28,7 +28,7 @@ export default function App() {
 
             <Row>
                 <Departures />
-                <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+                <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
                     <div style={{ flex: 1 }}>
                         <span>here be weather</span>
                     </div>
@@ -36,7 +36,6 @@ export default function App() {
                         <span>here be tweet</span>
                     </div>
                 </div>
-
             </Row>
         </Body>
     );
