@@ -4,6 +4,6 @@ import ReactDOM from "react-dom";
 
 import App from "./App";
 
-moment.locale("nb")
+moment.locale("nb");
 
 ReactDOM.render(<App />, document.getElementById("root"));

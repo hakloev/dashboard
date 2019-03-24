@@ -9,23 +9,23 @@ const Text = styled.p`
 `;
 
 function Clock() {
-  const [date, setDate] = useState(moment());
+    const [date, setDate] = useState(moment());
 
-  useEffect(() => {
-    const tomorrow = moment().add(1, "day");
-    const diff = tomorrow.diff(date, "milliseconds");
+    useEffect(() => {
+        const tomorrow = moment().add(1, "day");
+        const diff = tomorrow.diff(date, "milliseconds");
 
-    const timeout = setTimeout(tick, diff);
-    return () => clearTimeout(timeout);
-  });
+        const timeout = setTimeout(tick, diff);
+        return () => clearTimeout(timeout);
+    });
 
-  function tick() {
-    setDate(moment());
-  }
+    function tick() {
+        setDate(moment());
+    }
 
-  return (
-    <Text>{moment(date).format("dddd, DD MMMM")}</Text>
-  );
+    return (
+        <Text>{moment(date).format("dddd, DD MMMM")}</Text>
+    );
 }
 
 export default Clock;
